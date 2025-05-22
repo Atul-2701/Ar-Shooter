@@ -1,11 +1,32 @@
+using BigRookGames.Weapons;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+
+    [SerializeField] Text scoreText;
+    Vector3 postion;
+
+    int score = 0;
+
+    private void Start()
+    {
+        scoreText.text = "Score: " + score.ToString();
+    }
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            ShootTarget();
+        }
+    }
+
     public void ShootTarget()
     {
+        GunfireController.GetInstance().FireWeapon();
         Vector3 SpawnPoint = new Vector3(Random.Range(5f, -5f), Random.Range(5f, -5f), 15f);
         RaycastHit hit;
 
@@ -13,10 +34,13 @@ public class Player : MonoBehaviour
         {
             if (hit.transform.CompareTag("Target"))
             {
-                hit.transform.position = SpawnPoint;
+                GameManager.instance.UpdateValue(postion);
+                score++;
+                scoreText.text = "Score: " + score.ToString();
+                hit.transform.position = postion;
                 hit.transform.rotation = Quaternion.identity;
             }
         }
-
+          
     }
 }
