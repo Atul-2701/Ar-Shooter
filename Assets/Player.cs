@@ -43,13 +43,13 @@ public class Player : MonoBehaviour
             if (hit.transform.CompareTag("Target"))
             {
                 GameManager.GetInstance().UpdateValue();
-                Debug.Log(GameManager.GetInstance().position);
                 score++;
                 scoreText.text = "Score: " + score.ToString();
                 hit.transform.position = GameManager.GetInstance().position;
                 hit.transform.rotation = Quaternion.identity;
             }
         }
-          
+
+
     }
 }
